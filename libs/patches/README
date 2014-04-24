@@ -1,0 +1,14 @@
+The files contained in this directory are used to patch a raw, fresh extraction of the Mercury API. 
+
+There are three file:
+    1. API.patch
+    2. Library.patch
+    3. LLRP.ORG.patch
+
+In order to use these files:
+    1. Download and extract the ThingMagic Mercury API from the Thingmagic.com website. (Current version available http://www.thingmagic.com/images/stories/publicuserguides/mercuryapi-1.21.4.61.zip)
+    2. Navigate to <extraction folder>/c/src/api. Issue a 'make' command. Note: this will fail after a few seconds. 
+    3. Copy API.patch from the patches folder to the api folder. Patch file by executing command 'patch < API.patch'. 
+    4. Copy Library.patch to <extraction folder>/c/src/api/lib/LTK/LTKC/Library. Patch file by executing command 'patch < Library.patch.
+    5. Copy LLRP.ORG.patch to <extraction folder>/c/src/api/lib/LTK/LTKC/Library/LLRP.org. Patch file by executing command 'patch < LLRP.ORG.patch'.
+    6. Navigat back to <extraction folder>/c/src/api. Execute 'make' command. This should successfully complete. 

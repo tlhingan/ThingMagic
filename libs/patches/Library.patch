@@ -1,0 +1,20 @@
+--- Makefile	2014-02-13 17:22:13.076302254 -0700
++++ MakefileNew	2014-02-13 17:25:15.628307613 -0700
+@@ -18,7 +18,7 @@
+ #CFLAGS = -O -Wall
+ AR              = ar
+ CC              ?= gcc
+-CFLAGS          ?= -g -Wall
++CFLAGS          ?= -g
+ 
+ # Position-independent code required for shared libraries
+ CFLAGS          += -fpic
+@@ -70,7 +70,7 @@
+ 	$(AR) crv $(LTKC_LIB) $(LTKC_OBJS)
+ 
+ $(LTKC_SHARED_LIB) : $(LTKC_OBJS)
+-	$(CC) -mcpu=strongarm -mtune=xscale -mbig-endian -shared -Wl,-soname,$(LTKC_SONAME) -o $(LTKC_SHARED_LIB) $(LTKC_OBJS)
++	$(CC) -mcpu=strongarm -mtune=xscale -shared -Wl,-soname,$(LTKC_SONAME) -o $(LTKC_SHARED_LIB) $(LTKC_OBJS)
+ 	$(STRIP) $@
+ 
+ $(LTKC_OBJS) : $(LTKC_HDRS)

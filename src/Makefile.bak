@@ -1,0 +1,45 @@
+#***********************************
+# This makefile for use with the MercuryAPI
+# and compiling the magicwrapper used within python. 
+# Author: chriszaal@sait.ca
+# Date: October 1, 2013
+#***********************************
+
+#Variables for use in the makefile
+#Set gcc as the compiler to use for this make
+CC=gcc
+TEMPPATH=/home/pi/Subversion/root/internal/Zaal/mercuryapi-1.21.4.61/c/src/api
+
+#Set CFLAGS for compilation to include the three folder locations of library include files
+#Also set for all warnings 
+CFLAGS=-Wall -c -fPIC
+#-I$(TEMPPATH) -I$(TEMPPATH)/lib/LTK/LTKC/Library -I$(TEMPPATH)/lib/LTK/LTKC/Library/LLRP.org
+
+#Set LDFLAGS for linking. Show all warnings and include library locations
+LDFLAGS=-Wall
+# -I$(TEMPPATH) -I$(TEMPPATH)/lib/LTK/LTKC/Library -I$(TEMPPATH)/lib/LTK/LTKC/Library/LLRP.org 
+
+#Set LIBS to equal the file locations of where the libraries are actually located 
+LIBS=-lmercuryapi -lltkc -lltkctm -lpthread
+#-L$(TEMPPATH) -L$(TEMPPATH)/lib/LTK/LTKC/Library -L$(TEMPPATH)/lib/LTK/LTKC/Library/LLRP.org -lmercuryapi -lltkc -lltkctm -lpthread
+
+build:
+	make reader
+#	mv TMReader /root/Subversion/root/Olimex
+	make clean
+reader: TMReader.c socket_comms.o configUtils.o
+	$(CC) $(CFLAGS) TMReader.c -o TMReader.o
+	$(CC) $(LDFLAGS) TMReader.o configUtils.o socket_comms.o $(LIBS) -o TMReader
+	
+configUtils.o:configUtils.c
+	$(CC) $(CFLAGS) -g configUtils.c
+
+socket_comms.o: socket_comms.c
+	gcc -c socket_comms.c -o socket_comms.o
+	
+myTest: configUtils.c
+	#$(CC) -DDEBUG $(CFLAGS) configUtils.c
+	$(CC) $(CFLAGS) configUtils.c
+	$(CC) configUtils.o -o MyTest
+clean:
+	rm -rfv *.o *.*~ *~ libmagicwrapper.so core
